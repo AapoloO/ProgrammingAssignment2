@@ -4,22 +4,23 @@
 ## the return of the first function is a list that contain the other functions
 ## so i can execute a function of the makeCacheMatrix environment from assign
 ## the function to a variable and select from the $ symbol
-
 ## With the second function it is calculated the inverse of elements that
 ## has been assigned to the previous list
+## This two functions are to calculated the inverse for no square matrix
 
 ## This function generates an environment with other functions that can be 
 ## execute from other function, for that is that is called 
 ## "makeCacheMatrix" unless it´s return is a list
 
+
 makeCacheMatrix <- function(x = matrix()) {
-  inver <- NULL  
+  inver <- NULL  #There is no inverse
   set <- function(y){ 
     x <<- y 
     inver <<- NULL}
-  get <- function() x 
+  get <- function() x #function to get the original matrix
   setinver <- function(inverse) inver <<- solve 
-  getinver <- function() inver 
+  getinver <- function() inver    
   #all this function are in the environment of makeCacheMatrix
   return(list(set = set, get = get, 
               setinver = setinver,
@@ -30,12 +31,12 @@ makeCacheMatrix <- function(x = matrix()) {
 ##and return the inverse value of the matrix catched
 
 cacheSolve <- function(x, ...) {        inver <- x$getinver() 
-#if some data is in inver then the matrix inverse is already done
+#if it is some data in inver then the matrix inverse is already done
 if(!is.null(inver)) { 
   me<-message("getting cached data") 
   return(me)
 }
-#this function will execute the solve function to the matrix
+
 matrixin <- x$get() 
 inver <- solve(matrixin, ...) 
 x$setinver(inver) 
